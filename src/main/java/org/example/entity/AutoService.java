@@ -68,7 +68,6 @@ public final class AutoService {
     }
     public void releaseBox(String carId) {
         lock.lock();
-
         try {
             availableBoxes++;
             logger.info("{} released the repair box", carId);

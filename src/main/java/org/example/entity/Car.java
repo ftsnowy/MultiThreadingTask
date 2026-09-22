@@ -39,12 +39,12 @@ public class Car implements Callable<Void> {
         autoService.acquireResources(id, requiredParts);
 
         try {
-            state = new RepairingState();
+            state = state.next();
             state.handle(id);
 
             TimeUnit.SECONDS.sleep(repairTime);
 
-            state = new CompletedState();
+            state = state.next();
             state.handle(id);
         } finally {
             autoService.releaseBox(id);

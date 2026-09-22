@@ -12,4 +12,9 @@ public class RepairingState implements CarState {
     public void handle(String carId) {
         logger.info("{} is being repaired", carId);
     }
+
+    @Override
+    public CarState next() {
+        return new CompletedState();
+    }
 }
