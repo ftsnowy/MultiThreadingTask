@@ -55,15 +55,13 @@ public final class AutoService {
             }
 
             if (requiredParts > availableParts) {
-                throw new CustomException(
-                        "Not enough spare parts for " + carId
-                );
+                logger.warn("{} cannot be serviced: required {} spare parts, but only {} are available", carId, requiredParts, availableParts);
+                throw new CustomException("Service refused for " + carId + ": not enough spare parts");
+            } else {
+                availableBoxes--;
+                availableParts -= requiredParts;
+                logger.info("{} acquired a repair box and {} spare parts. Remaining spare parts: {}", carId, requiredParts, availableParts);
             }
-
-            availableBoxes--;
-            availableParts -= requiredParts;
-
-            logger.info("{} acquired a repair box and {} spare parts", carId, requiredParts);
         } finally {
             lock.unlock();
         }
